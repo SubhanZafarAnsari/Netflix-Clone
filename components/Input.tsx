@@ -1,10 +1,30 @@
 import React from "react";
 
-export default function Input(props) {
+//props
+interface InputProps {
+  id : string,
+  onChange: any,
+  value: string,
+  Label: string,
+  type: string,
+}
+
+const Input: React.FC<InputProps> = ({
+  id,
+  onChange,
+  type,
+  value,
+  Label,
+  
+}) => {
   return (
+    //The input component
     <div className="relative">
       <input
-        id="email"
+        id={id}
+        onChange={onChange}
+        type={type}
+        value={value}
         className="
       block
       rounded-md
@@ -22,7 +42,7 @@ export default function Input(props) {
       "
         placeholder=" "
       />
-      <label htmlFor="email" className="
+      <label htmlFor={id} className="
         absolute 
         text-md
         text-zinc-400
@@ -39,8 +59,10 @@ export default function Input(props) {
         peer-focus:scale-75
         peer-focus:-translate-y-3
       ">
-        {props.isFor}
+        {Label}
       </label>
     </div>
-  );
+  )
 }
+
+export default Input
