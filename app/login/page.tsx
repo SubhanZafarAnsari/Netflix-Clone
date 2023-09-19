@@ -21,7 +21,7 @@ function page() {
             className="h-12"
           />
         </nav>
-        {/* The sign up box */}
+        {/* The sign in box */}
         <div className=" flex justify-center">
           <div className="bg-black bg-opacity-70 px-16 py-16 self-centre mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full">
             <h2 className=" text-white text-4xl mb-8 font-semibold">Sign in</h2>
@@ -56,6 +56,11 @@ function page() {
                 type="password"
                 value={password}
               ></Input>
+              <button className="bg-red-600 py-3 text-white rounded-md w-full hover:bg-red-700 transition">Login</button>
+              <p className="text-neutral-500 mt-12">
+                First time usning Netflix?
+                <span className="text-white ml-1 hover:underline cursor-pointer">Create an Account</span>
+              </p>
             </div>
           </div>
         </div>
