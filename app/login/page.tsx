@@ -1,8 +1,8 @@
 "use client";
-import { useCallback, useState } from "react";
+import React, { useState, useCallback } from "react";
 import Input from "@/components/Input";
 
-function page() {
+function Page() {
   const [email, setEmail] = useState("");
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
@@ -68,15 +68,19 @@ function page() {
                 value={password}
               ></Input>
               <button className="bg-red-600 py-3 text-white rounded-md w-full hover:bg-red-700 transition">
-                {varient === 'login'? 'Sign in': 'Sign up'}
+                {varient === "login" ? "Sign in" : "Sign up"}
               </button>
               <p className="text-neutral-500 mt-8">
-                {varient==='login' ? "First time usning Netflix?" : "Already have an account"}
+                {varient === "login"
+                  ? "First time usning Netflix?"
+                  : "Already have an account"}
                 <span
                   onClick={toggleVarient}
                   className="text-white ml-1 hover:underline cursor-pointer"
                 >
-                  {varient === "login"? 'Create an account': 'Login to existing account'}
+                  {varient === "login"
+                    ? "Create an account"
+                    : "Login to existing account"}
                 </span>
               </p>
             </div>
@@ -87,4 +91,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
