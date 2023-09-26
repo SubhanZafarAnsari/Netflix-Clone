@@ -1,11 +1,12 @@
 import NextAuth from "next-auth/next";
-import prisma from "../../../../lib/prismadb";
+import prismadb from "../../../../lib/prismadb";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
+import bcrypt from "bcrypt"
 
 const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prismadb),
   providers: [
     CredentialsProvider({
       name: "credentials",
@@ -14,8 +15,35 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = { id: 1, name: "Subhan", email:"subhan@email.com", password: "0123456"}
+        // if email and password is there
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error('Missing Fields');
+        }
+
+        // if user actuallt exist 
+        const user = await prismadb.user.findUnique({
+          where: {
+            email: credentials.email,
+          }
+        });
+
+        // if user doesn't exist 
+        if (!user || !user.hashedPassword) {
+          throw new Error("No user found");
+        }
+
+        // check if the passwords match
+        const passwordMatch = await bcrypt.compare(credentials.password, user.hashedPassword)
+
+        // if passwords dont match
+        if (!passwordMatch) {
+          throw new Error("Password not matched");
+          return null;
+        }
+
+        // if the passwords matched
         return user;
+
       },
     }),
   ],
